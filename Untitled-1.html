@@ -1,0 +1,4417 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ONLINE BOZOR</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at 10% 10%,#38bdf844,transparent 25%),
+        radial-gradient(circle at 90% 20%,#2563eb55,transparent 28%),
+        radial-gradient(circle at 50% 100%,#06b6d444,transparent 30%),
+        linear-gradient(135deg,#06182e,#082f49,#075985,#0369a1);
+    color:#172033;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+}
+
+/* ================= BOZOR DEKOR FONI ================= */
+
+body::before{
+    content:"🛒     🍎     🥦     🥤     🍞     📦     🛍️     🍊     🥛     🍇     🛒     🥕";
+    position:fixed;
+    inset:-100px;
+    z-index:-2;
+    font-size:55px;
+    line-height:150px;
+    letter-spacing:20px;
+    color:white;
+    opacity:.045;
+    transform:rotate(-8deg) scale(1.2);
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    right:-250px;
+    bottom:-250px;
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle,
+            #38bdf855,
+            #0ea5e922,
+            transparent 70%
+        );
+    z-index:-1;
+    pointer-events:none;
+}
+
+/* Yorqin fon nuqtalari */
+
+body{
+    background-image:
+        radial-gradient(circle at 10% 15%,#38bdf855 0,transparent 22%),
+        radial-gradient(circle at 90% 15%,#60a5fa44 0,transparent 24%),
+        radial-gradient(circle at 20% 90%,#22d3ee33 0,transparent 25%),
+        radial-gradient(circle at 80% 80%,#2563eb55 0,transparent 28%),
+        linear-gradient(135deg,#06182e,#082f49,#075985,#0369a1);
+}
+
+button{
+    cursor:pointer;
+}
+
+input,select,textarea,button{
+    font:inherit;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.container{
+    width:100%;
+    max-width:1450px;
+    margin:auto;
+}
+
+/* ================= AUTH ================= */
+
+.auth{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+
+    background:
+        radial-gradient(circle at 15% 20%,#38bdf877,transparent 28%),
+        radial-gradient(circle at 85% 75%,#22d3ee55,transparent 30%),
+        radial-gradient(circle at 50% 100%,#2563eb77,transparent 35%),
+        linear-gradient(135deg,#020617,#082f49,#075985,#0369a1);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.auth::before{
+    content:"🛒   🥦   🍎   🥤   🍞   🛍️   🍊   📦   🥛   🍇   🥕";
+    position:absolute;
+    inset:-120px;
+    font-size:65px;
+    line-height:170px;
+    letter-spacing:30px;
+    color:white;
+    opacity:.06;
+    transform:rotate(-12deg) scale(1.15);
+    pointer-events:none;
+}
+
+.auth::after{
+    content:"";
+    position:absolute;
+    width:650px;
+    height:650px;
+    left:-280px;
+    bottom:-300px;
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle,
+            #38bdf866,
+            transparent 65%
+        );
+    pointer-events:none;
+}
+
+.auth-box{
+    position:relative;
+    z-index:2;
+    width:470px;
+    max-width:100%;
+    background:rgba(255,255,255,.97);
+    border-radius:24px;
+    padding:32px;
+    box-shadow:
+        0 25px 80px #0008,
+        0 0 50px #38bdf833;
+    backdrop-filter:blur(10px);
+}
+
+.logo-big{
+    text-align:center;
+    font-size:65px;
+    filter:drop-shadow(0 5px 10px #0002);
+}
+
+.auth-box h1{
+    text-align:center;
+    color:#075985;
+    margin:8px 0;
+}
+
+.auth-sub{
+    text-align:center;
+    color:#64748b;
+    margin-bottom:25px;
+}
+
+.auth-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.auth-tab{
+    border:0;
+    padding:14px;
+    border-radius:10px;
+    background:#e2e8f0;
+    font-weight:bold;
+}
+
+.auth-tab.active{
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+}
+
+.auth-form input{
+    width:100%;
+    padding:14px;
+    margin-bottom:12px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    outline:none;
+}
+
+.auth-form input:focus{
+    border-color:#0284c7;
+    box-shadow:0 0 0 3px #38bdf122;
+}
+
+.main-btn{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.gray-btn{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:10px;
+    background:#e2e8f0;
+    color:#172033;
+    font-weight:bold;
+}
+
+.error{
+    color:#dc2626;
+    text-align:center;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+.success{
+    color:#16a34a;
+    text-align:center;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    min-height:72px;
+    background:
+        linear-gradient(
+            90deg,
+            #082f49,
+            #0369a1,
+            #0284c7,
+            #2563eb
+        );
+    color:white;
+    padding:12px 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 3px 20px #0005;
+}
+
+.logo{
+    font-weight:bold;
+    font-size:22px;
+}
+
+.header-user{
+    text-align:center;
+}
+
+.header-user small{
+    opacity:.8;
+    display:block;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.header-actions button{
+    border:0;
+    padding:10px 14px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.logout{
+    background:white;
+    color:#075985;
+}
+
+/* ================= CUSTOMER ================= */
+
+.customer-app{
+    min-height:100vh;
+}
+
+.customer-main{
+    max-width:1450px;
+    margin:auto;
+    padding:25px;
+}
+
+.hero{
+    background:rgba(255,255,255,.97);
+    padding:25px;
+    border-radius:18px;
+    box-shadow:
+        0 5px 20px #0002,
+        0 0 30px #38bdf422;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    color:#075985;
+    margin-bottom:8px;
+}
+
+.hero p{
+    color:#64748b;
+}
+
+.search-box{
+    margin-bottom:15px;
+}
+
+.search-box input{
+    width:100%;
+    padding:16px;
+    border:2px solid #cbd5e1;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+    background:white;
+}
+
+.search-box input:focus{
+    border-color:#0284c7;
+    box-shadow:0 0 0 4px #38bdf122;
+}
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.filter{
+    border:0;
+    padding:11px 17px;
+    background:white;
+    color:#475569;
+    border-radius:9px;
+    font-weight:bold;
+    box-shadow:0 2px 8px #0002;
+}
+
+.filter:hover{
+    background:#eff6ff;
+    color:#0369a1;
+}
+
+.filter.active{
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+}
+
+.market-layout{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:20px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:16px;
+}
+
+.product{
+    background:rgba(255,255,255,.98);
+    border-radius:17px;
+    padding:18px;
+    border:2px solid transparent;
+    box-shadow:0 4px 15px #0002;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.product:hover{
+    transform:translateY(-5px);
+    border-color:#38bdf8;
+    box-shadow:
+        0 10px 25px #0003,
+        0 0 20px #38bdf833;
+}
+
+.product-icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.product h3{
+    margin-bottom:6px;
+}
+
+.product-store{
+    color:#0284c7;
+    font-size:13px;
+    font-weight:bold;
+    margin:6px 0;
+}
+
+.product-price{
+    color:#0284c7;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.product-stock{
+    color:#64748b;
+    font-size:12px;
+    margin-top:7px;
+}
+
+/* ================= CART ================= */
+
+.cart{
+    background:rgba(255,255,255,.98);
+    border-radius:18px;
+    padding:20px;
+    height:max-content;
+    position:sticky;
+    top:92px;
+    box-shadow:0 5px 18px #0002;
+}
+
+.cart h2{
+    margin-bottom:15px;
+    color:#075985;
+}
+
+.cart-list{
+    max-height:470px;
+    overflow:auto;
+}
+
+.empty{
+    text-align:center;
+    color:#94a3b8;
+    padding:30px 10px;
+}
+
+.cart-item{
+    border-bottom:1px solid #e2e8f0;
+    padding:12px 0;
+}
+
+.cart-title{
+    font-weight:bold;
+}
+
+.cart-store{
+    color:#0284c7;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.cart-price{
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.cart-controls{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-top:8px;
+    flex-wrap:wrap;
+}
+
+.qty{
+    width:28px;
+    height:28px;
+    border:0;
+    border-radius:6px;
+    background:#e2e8f0;
+}
+
+.remove{
+    margin-left:auto;
+    border:0;
+    background:#fee2e2;
+    color:#dc2626;
+    padding:6px 8px;
+    border-radius:6px;
+}
+
+.cart-summary{
+    border-top:2px solid #e2e8f0;
+    padding-top:15px;
+    margin-top:15px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.total{
+    font-size:23px;
+    color:#075985;
+}
+
+.buy-btn{
+    width:100%;
+    border:0;
+    padding:15px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:#0009;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+    backdrop-filter:blur(5px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:620px;
+    max-width:100%;
+    max-height:92vh;
+    overflow:auto;
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 25px 80px #0007;
+}
+
+.modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:50%;
+    background:#fee2e2;
+    color:#dc2626;
+    font-size:22px;
+}
+
+/* ================= STORE PRICE ================= */
+
+.store-card{
+    border:2px solid #e2e8f0;
+    border-radius:13px;
+    padding:15px;
+    margin-bottom:12px;
+    transition:.2s;
+}
+
+.store-card:hover{
+    border-color:#38bdf8;
+}
+
+.best-store{
+    border-color:#0284c7;
+    background:#eff6ff;
+}
+
+.store-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-weight:bold;
+}
+
+.store-final{
+    color:#0284c7;
+    font-size:22px;
+    font-weight:bold;
+    margin:8px 0;
+}
+
+.old{
+    color:#94a3b8;
+    text-decoration:line-through;
+    margin-right:8px;
+}
+
+.sale{
+    color:#dc2626;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.store-add{
+    width:100%;
+    border:0;
+    padding:10px;
+    border-radius:8px;
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+    font-weight:bold;
+}
+
+.store-add:disabled{
+    background:#94a3b8;
+    cursor:not-allowed;
+}
+
+/* ================= CHECKOUT ================= */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+}
+
+.phone-choice{
+    display:grid;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.phone-option{
+    border:2px solid #e2e8f0;
+    padding:13px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.phone-option.selected{
+    border-color:#0284c7;
+    background:#eff6ff;
+}
+
+.phone-other{
+    display:none;
+    margin-top:8px;
+}
+
+.phone-other.show{
+    display:block;
+}
+
+.confirm{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:9px;
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+    font-weight:bold;
+}
+
+/* ================= ORDERS ================= */
+
+.order-card{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.order-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.order-status{
+    color:#0284c7;
+    font-weight:bold;
+}
+
+/* ================= MARKET ================= */
+
+.market-app{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 10%,#38bdf822,transparent 25%),
+        radial-gradient(circle at 90% 90%,#2563eb22,transparent 30%),
+        linear-gradient(135deg,#e0f2fe,#f1f5f9);
+}
+
+.market-header{
+    min-height:70px;
+    background:
+        linear-gradient(
+            90deg,
+            #020617,
+            #082f49,
+            #075985
+        );
+    color:white;
+    padding:0 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.market-header button{
+    border:0;
+    padding:10px 14px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.market-main{
+    max-width:1450px;
+    margin:auto;
+    padding:25px;
+}
+
+.market-grid{
+    display:grid;
+    grid-template-columns:380px 1fr;
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:17px;
+    box-shadow:0 3px 12px #0002;
+    margin-bottom:20px;
+}
+
+.card h2{
+    margin-bottom:17px;
+    color:#075985;
+}
+
+.card input,
+.card select,
+.card textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+
+.card label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.market-btn{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:9px;
+    background:linear-gradient(135deg,#0284c7,#2563eb);
+    color:white;
+    font-weight:bold;
+}
+
+.blue-btn{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:9px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+}
+
+.shop-box{
+    background:
+        linear-gradient(
+            135deg,
+            #e0f2fe,
+            #dbeafe
+        );
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+    border:1px solid #bae6fd;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:850px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #e2e8f0;
+    text-align:left;
+}
+
+th{
+    background:#082f49;
+    color:white;
+}
+
+td input{
+    width:90px!important;
+    margin:0!important;
+}
+
+.delete{
+    border:0;
+    background:#fee2e2;
+    color:#dc2626;
+    padding:7px 10px;
+    border-radius:7px;
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#082f49;
+    color:white;
+    padding:15px 20px;
+    border-radius:10px;
+    opacity:0;
+    transform:translateY(100px);
+    transition:.3s;
+    z-index:3000;
+    box-shadow:0 10px 30px #0005;
+}
+
+#toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= CATEGORY ================= */
+
+.category-badge{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:6px;
+    background:#e0f2fe;
+    color:#075985;
+    font-size:11px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar{
+    width:9px;
+    height:9px;
+}
+
+::-webkit-scrollbar-track{
+    background:#e0f2fe;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#0284c7;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#075985;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    .market-layout{
+        grid-template-columns:1fr;
+    }
+
+    .cart{
+        position:static;
+    }
+
+    .market-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .header,
+    .market-header{
+        flex-wrap:wrap;
+        padding:12px 15px;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .header-actions button{
+        flex:1;
+    }
+
+    .customer-main,
+    .market-main{
+        padding:15px;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .filters{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:450px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+
+    .auth-box{
+        padding:22px;
+    }
+
+    .logo-big{
+        font-size:55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     AUTH
+===================================================== -->
+
+<div id="authScreen" class="auth">
+
+<div class="auth-box">
+
+<div class="logo-big">🛒</div>
+
+<h1>ONLINE BOZOR</h1>
+
+<p class="auth-sub">
+Bozordagi mahsulotlarni toping, solishtiring va xarid qiling.
+</p>
+
+<div class="auth-tabs">
+
+<button id="customerTab"
+class="auth-tab active"
+onclick="switchAuth('customer')">
+👤 MIJOZ
+</button>
+
+<button id="marketTab"
+class="auth-tab"
+onclick="switchAuth('market')">
+🏪 MARKET
+</button>
+
+</div>
+
+<div id="customerAuth">
+
+<div id="customerLogin">
+
+<div class="auth-form">
+
+<input id="cPhone"
+placeholder="+998 90 123 45 67">
+
+<input id="cPassword"
+type="password"
+placeholder="Parol">
+
+<button class="main-btn"
+onclick="customerLogin()">
+🔐 Kirish
+</button>
+
+<button class="gray-btn"
+onclick="showCustomerRegister()">
+📝 Yangi akkaunt
+</button>
+
+<div id="customerLoginError" class="error"></div>
+
+</div>
+</div>
+
+<div id="customerRegister" class="hidden">
+
+<div class="auth-form">
+
+<input id="rName" placeholder="Ismingiz">
+
+<input id="rPhone"
+placeholder="+998 90 123 45 67">
+
+<input id="rPassword"
+type="password"
+placeholder="Parol">
+
+<input id="rPassword2"
+type="password"
+placeholder="Parolni qayta kiriting">
+
+<button class="main-btn"
+onclick="registerCustomer()">
+✅ Ro'yxatdan o'tish
+</button>
+
+<button class="gray-btn"
+onclick="showCustomerLogin()">
+← Kirishga qaytish
+</button>
+
+<div id="customerRegisterMessage"></div>
+
+</div>
+</div>
+
+</div>
+
+<div id="marketAuth" class="hidden">
+
+<div id="marketLogin">
+
+<div class="auth-form">
+
+<input id="marketPhone"
+placeholder="Login: UMIDJON">
+
+<input id="marketPassword"
+type="password"
+placeholder="Parol">
+
+<button class="main-btn"
+onclick="marketLogin()">
+🏪 Marketga kirish
+</button>
+
+<button class="gray-btn"
+onclick="showMarketRegister()">
+➕ Yangi do'kon ochish
+</button>
+
+<div id="marketLoginError" class="error"></div>
+
+<div style="
+margin-top:15px;
+background:#eff6ff;
+padding:12px;
+border-radius:10px;
+font-size:13px;
+color:#075985;
+line-height:1.7">
+
+<b>Demo marketlar:</b><br>
+UMIDJON / 9699<br>
+SARDOR / 9699<br>
+ASIA / 9699
+
+</div>
+
+</div>
+</div>
+
+<div id="marketRegister" class="hidden">
+
+<div class="auth-form">
+
+<input id="shopName"
+placeholder="Do'kon nomi">
+
+<input id="ownerName"
+placeholder="Sotuvchi / egasi ismi">
+
+<input id="shopPhone"
+placeholder="+998 90 123 45 67">
+
+<input id="shopPassword"
+type="password"
+placeholder="Parol">
+
+<input id="shopPassword2"
+type="password"
+placeholder="Parolni qayta kiriting">
+
+<input id="shopIcon"
+value="🏪"
+placeholder="Do'kon belgisi">
+
+<button class="main-btn"
+onclick="registerMarket()">
+🏪 Do'konni ochish
+</button>
+
+<button class="gray-btn"
+onclick="showMarketLogin()">
+← Kirishga qaytish
+</button>
+
+<div id="marketRegisterMessage"></div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- =====================================================
+     CUSTOMER APP
+===================================================== -->
+
+<div id="customerApp" class="hidden">
+
+<header class="header">
+
+<div class="logo">
+🛒 ONLINE BOZOR
+</div>
+
+<div class="header-user">
+<small>Mijoz</small>
+<b id="customerName">-</b>
+</div>
+
+<div class="header-actions">
+
+<button onclick="openOrders()">
+📦 Buyurtmalarim
+</button>
+
+<button onclick="customerLogout()" class="logout">
+Chiqish
+</button>
+
+</div>
+
+</header>
+
+<main class="customer-main">
+
+<div class="hero">
+
+<h1>🛍️ Bozor</h1>
+
+<p>
+Turli do'konlardagi barcha mahsulotlarni bitta joydan qidiring,
+narxlarni solishtiring va xarid qiling.
+</p>
+
+</div>
+
+<div class="search-box">
+
+<input
+id="marketSearch"
+placeholder="🔎 Mahsulot nomi, barcode yoki market nomi..."
+autocomplete="off"
+oninput="renderMarket()">
+
+</div>
+
+<div class="filters">
+
+<button class="filter active"
+id="filterAll"
+onclick="setFilter('all')">
+🛍️ BARCHASI
+</button>
+
+<button class="filter"
+id="filterFood"
+onclick="setFilter('food')">
+🍎 OZIQ-OVQAT
+</button>
+
+<button class="filter"
+id="filterDrinks"
+onclick="setFilter('drinks')">
+🥤 ICHIMLIKLAR
+</button>
+
+<button class="filter"
+id="filterSnacks"
+onclick="setFilter('snacks')">
+🍿 SNEKLAR
+</button>
+
+<button class="filter"
+id="filterAlcohol"
+onclick="setFilter('alcohol')">
+🍺 SPIRTLI ICHIMLIKLAR
+</button>
+
+</div>
+
+<div class="market-layout">
+
+<section>
+
+<div id="marketProducts" class="products">
+</div>
+
+</section>
+
+<aside class="cart">
+
+<h2>🛒 Savat</h2>
+
+<div id="cartList" class="cart-list">
+</div>
+
+<div class="cart-summary">
+
+<div class="summary-row">
+<span>Mahsulotlar:</span>
+<b id="cartCount">0</b>
+</div>
+
+<div class="summary-row">
+<span>Jami:</span>
+<b id="cartTotal" class="total">
+0 so'm
+</b>
+</div>
+
+<button class="buy-btn"
+onclick="openCheckout()">
+⚡ Tezkor buyurtma
+</button>
+
+</div>
+
+</aside>
+
+</div>
+
+</main>
+
+</div>
+
+<!-- PRODUCT MODAL -->
+
+<div id="productModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<h2>🏪 Marketlardagi narxlar</h2>
+
+<button class="close"
+onclick="closeModal('productModal')">
+×
+</button>
+
+</div>
+
+<div id="productDetail"></div>
+
+</div>
+</div>
+
+<!-- CHECKOUT -->
+
+<div id="checkoutModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<h2>⚡ Tezkor buyurtma</h2>
+
+<button class="close"
+onclick="closeModal('checkoutModal')">
+×
+</button>
+
+</div>
+
+<div class="form-group">
+
+<label>📱 Buyurtma telefoni</label>
+
+<div class="phone-choice">
+
+<div id="myPhoneOption"
+class="phone-option selected"
+onclick="choosePhone('my')">
+
+<input type="radio"
+name="phoneType"
+checked>
+
+<b>Mening raqamim</b>
+
+<div id="myPhoneText"
+style="color:#64748b;margin-top:4px">
+</div>
+
+</div>
+
+<div id="otherPhoneOption"
+class="phone-option"
+onclick="choosePhone('other')">
+
+<input type="radio"
+name="phoneType">
+
+<b>Boshqa raqamga buyurtma berish</b>
+
+<div class="phone-other"
+id="otherPhoneBox">
+
+<input id="otherPhone"
+placeholder="+998 90 123 45 67"
+onclick="event.stopPropagation()">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="form-group">
+
+<label>📍 Yetkazib berish manzili</label>
+
+<textarea id="checkoutAddress"
+rows="3"
+placeholder="Manzilni kiriting"></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>💳 To'lov</label>
+
+<select id="checkoutPayment">
+
+<option value="cash">💵 Naqd</option>
+<option value="card">💳 Karta</option>
+<option value="click">📱 Click</option>
+
+</select>
+
+</div>
+
+<div style="
+background:#eff6ff;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px">
+
+Jami:
+
+<b id="checkoutTotal"
+style="color:#0284c7;font-size:22px">
+0 so'm
+</b>
+
+</div>
+
+<button class="confirm"
+onclick="completePurchase()">
+✅ Buyurtmani tasdiqlash
+</button>
+
+</div>
+</div>
+
+<!-- ORDERS -->
+
+<div id="ordersModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<h2>📦 Buyurtmalarim</h2>
+
+<button class="close"
+onclick="closeModal('ordersModal')">
+×
+</button>
+
+</div>
+
+<div id="ordersList"></div>
+
+</div>
+</div>
+
+<!-- MARKET APP -->
+
+<div id="marketApp" class="market-app hidden">
+
+<header class="market-header">
+
+<h2>🏪 MARKET PANEL</h2>
+
+<div>
+
+<span id="marketHeaderName"
+style="margin-right:15px">
+</span>
+
+<button onclick="marketLogout()">
+Chiqish
+</button>
+
+</div>
+
+</header>
+
+<main class="market-main">
+
+<div class="shop-box">
+
+<h2 id="myShopTitle">
+🏪 Mening do'konim
+</h2>
+
+<p style="color:#64748b;margin-top:5px">
+Bu panel orqali o'z do'koningizni va mahsulotlaringizni
+mustaqil boshqarasiz.
+</p>
+
+</div>
+
+<div class="market-grid">
+
+<div>
+
+<div class="card">
+
+<h2>➕ Mahsulot qo'shish</h2>
+
+<label>Barcode</label>
+
+<input id="pBarcode"
+placeholder="4780000000012">
+
+<label>Mahsulot nomi</label>
+
+<input id="pName"
+placeholder="Masalan: Guruch">
+
+<label>Kategoriya</label>
+
+<select id="pCategory">
+
+<option value="food">
+🍎 Oziq-ovqat
+</option>
+
+<option value="drinks">
+🥤 Ichimliklar
+</option>
+
+<option value="snacks">
+🍿 Sneklar
+</option>
+
+<option value="alcohol">
+🍺 Spirtli ichimliklar
+</option>
+
+</select>
+
+<label>Narx</label>
+
+<input id="pPrice"
+type="number"
+placeholder="20000">
+
+<label>Qoldiq</label>
+
+<input id="pStock"
+type="number"
+placeholder="100">
+
+<label>Aksiya %</label>
+
+<input id="pSale"
+type="number"
+min="0"
+max="100"
+value="0">
+
+<label>Emoji</label>
+
+<input id="pIcon"
+value="📦">
+
+<button class="market-btn"
+onclick="addMyProduct()">
+💾 Mahsulotni saqlash
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🏪 Do'kon ma'lumotlari</h2>
+
+<label>Do'kon nomi</label>
+
+<input id="editShopName">
+
+<label>Do'kon telefoni</label>
+
+<input id="editShopPhone">
+
+<label>Do'kon belgisi</label>
+
+<input id="editShopIcon">
+
+<button class="blue-btn"
+onclick="updateShop()">
+💾 Saqlash
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin-bottom:15px">
+
+<h2>📦 Mening mahsulotlarim</h2>
+
+<input
+id="myProductSearch"
+placeholder="Qidirish..."
+style="max-width:250px;margin:0"
+oninput="renderMyProducts()">
+
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>Mahsulot</th>
+<th>Barcode</th>
+<th>Kategoriya</th>
+<th>Narx</th>
+<th>Qoldiq</th>
+<th>Aksiya</th>
+<th>Yakuniy</th>
+<th>Amal</th>
+</tr>
+
+</thead>
+
+<tbody id="myProductsTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+
+/* =====================================================
+   DATABASE
+===================================================== */
+
+const DB_KEY="ONLINE_BOZOR_V5";
+
+let currentCustomer=null;
+let currentMarket=null;
+let cart=[];
+let currentFilter="all";
+let selectedPhoneType="my";
+
+function defaultDB(){
+    return{
+        customers:[],
+        markets:[],
+        products:[],
+        orders:[]
+    };
+}
+
+/* =====================================================
+   DEMO PRODUCTS
+===================================================== */
+
+const DEMO_PRODUCTS=[
+
+["Non","food","🍞",4000],
+["Patir non","food","🫓",7000],
+["Baton","food","🥖",6000],
+["Kulcha","food","🥯",5000],
+["Lavash non","food","🫓",8000],
+["Tandir non","food","🍞",7000],
+["Bug'doy non","food","🍞",5500],
+["Qora non","food","🍞",6000],
+["Mini baton","food","🥖",3500],
+["Sutli non","food","🍞",6500],
+
+["Sut 1L","food","🥛",12000],
+["Sut 0.5L","food","🥛",7000],
+["Qatiq 1L","food","🥛",11000],
+["Qatiq 0.5L","food","🥛",7000],
+["Kefir 1L","food","🥛",12000],
+["Kefir 0.5L","food","🥛",7500],
+["Qaymoq","food","🥛",16000],
+["Tvorog","food","🧀",22000],
+["Pishloq","food","🧀",35000],
+["Smetana","food","🥛",18000],
+
+["Guruch 1kg","food","🍚",18000],
+["Guruch 2kg","food","🍚",35000],
+["Grechka","food","🌾",12000],
+["Mosh","food","🫘",16000],
+["Loviya","food","🫘",18000],
+["No'xat","food","🫘",14000],
+["Arpa","food","🌾",10000],
+["Manka","food","🌾",9000],
+["Un 1kg","food","🌾",8000],
+["Un 2kg","food","🌾",15000],
+["Un 5kg","food","🌾",35000],
+["Shakar 1kg","food","🍚",13000],
+["Shakar 2kg","food","🍚",25000],
+["Tuz","food","🧂",4000],
+
+["Tushonka","food","🥫",28000],
+["Kukuruza konserva","food","🥫",14000],
+["No'xat konserva","food","🥫",13000],
+["Fasol konserva","food","🥫",15000],
+["Bodring konserva","food","🥒",18000],
+["Pomidor konserva","food","🍅",17000],
+["Tomat pasta","food","🍅",10000],
+["Mayonez","food","🥫",14000],
+["Ketchup","food","🍅",12000],
+
+["Kungaboqar yog'i 1L","food","🫗",18000],
+["Kungaboqar yog'i 0.5L","food","🫗",10000],
+["Zaytun yog'i","food","🫒",65000],
+["Sariyog'","food","🧈",28000],
+["Margarin","food","🧈",10000],
+
+["Olma","food","🍎",16000],
+["Banan","food","🍌",18000],
+["Apelsin","food","🍊",17000],
+["Mandarin","food","🍊",18000],
+["Limon","food","🍋",20000],
+["Uzum","food","🍇",25000],
+["Anor","food","🍎",22000],
+["Nok","food","🍐",18000],
+["Shaftoli","food","🍑",20000],
+["Tarvuz","food","🍉",8000],
+
+["Kartoshka","food","🥔",7000],
+["Piyoz","food","🧅",6000],
+["Sabzi","food","🥕",7000],
+["Pomidor","food","🍅",14000],
+["Bodring","food","🥒",12000],
+["Karam","food","🥬",6000],
+["Lavlagi","food","🫜",7000],
+["Sarimsoq","food","🧄",18000],
+["Qovoq","food","🎃",7000],
+["Baqlajon","food","🍆",12000],
+
+["Coca Cola 0.5L","drinks","🥤",7000],
+["Coca Cola 1L","drinks","🥤",10000],
+["Coca Cola 1.5L","drinks","🥤",13000],
+["Coca Cola 2L","drinks","🥤",16000],
+
+["Pepsi 0.5L","drinks","🥤",7000],
+["Pepsi 1L","drinks","🥤",10000],
+["Pepsi 1.5L","drinks","🥤",13000],
+["Pepsi 2L","drinks","🥤",16000],
+
+["Fanta 0.5L","drinks","🥤",7000],
+["Fanta 1L","drinks","🥤",10000],
+
+["Sprite 0.5L","drinks","🥤",7000],
+["Sprite 1L","drinks","🥤",10000],
+
+["7UP 0.5L","drinks","🥤",7000],
+["7UP 1L","drinks","🥤",10000],
+
+["Mountain Dew 0.5L","drinks","🥤",8000],
+["Mountain Dew 1L","drinks","🥤",11000],
+
+["Flash Energy","drinks","⚡",9000],
+["Adrenaline Energy","drinks","⚡",12000],
+["Red Bull","drinks","⚡",18000],
+["Gorilla Energy","drinks","⚡",10000],
+
+["Fuse Tea","drinks","🧃",8000],
+["Lipton Ice Tea","drinks","🧃",9000],
+["Dena Juice","drinks","🧃",12000],
+["Bliss Juice","drinks","🧃",14000],
+
+["Nestle Water","drinks","💧",4000],
+["Hydrolife Water","drinks","💧",3000],
+["Chortoq Water","drinks","💧",3500],
+["Bon Aqua","drinks","💧",4000],
+
+["Lay's Classic","snacks","🥔",13000],
+["Lay's Cheese","snacks","🥔",13000],
+["Lay's Paprika","snacks","🥔",13000],
+["Pringles Original","snacks","🥔",28000],
+["Pringles Cheese","snacks","🥔",28000],
+["Cheetos","snacks","🧀",11000],
+["Doritos","snacks","🌽",13000],
+["Kukuruza Chips","snacks","🌽",9000],
+["Crackers Cheese","snacks","🥨",8000],
+["Crackers Salt","snacks","🥨",8000],
+["Tuc Crackers","snacks","🥨",10000],
+["Popcorn","snacks","🍿",8000],
+["Peanut","snacks","🥜",12000],
+["Pista","snacks","🥜",30000],
+["Bodom","snacks","🥜",35000],
+["Yong'oq","snacks","🥜",28000],
+["Keshyu","snacks","🥜",40000],
+
+["Milka Chocolate","snacks","🍫",18000],
+["Alpen Gold","snacks","🍫",15000],
+["Snickers","snacks","🍫",9000],
+["Mars","snacks","🍫",9000],
+["Twix","snacks","🍫",9000],
+["Bounty","snacks","🍫",9000],
+["KitKat","snacks","🍫",9000],
+["Kinder Chocolate","snacks","🍫",13000],
+["Kinder Bueno","snacks","🍫",15000],
+["Roshen Chocolate","snacks","🍫",16000],
+["Ferrero Rocher","snacks","🍫",45000],
+["Raffaello","snacks","🍬",40000],
+["Chupa Chups","snacks","🍭",4000],
+["Skittles","snacks","🍬",12000],
+["M&M's","snacks","🍬",14000],
+["Haribo","snacks","🍬",16000],
+["Orbit","snacks","🍬",6000],
+["Dirol","snacks","🍬",6000],
+
+["Pivo 0.5L","alcohol","🍺",12000],
+["Pivo 1L","alcohol","🍺",20000],
+["Vino","alcohol","🍷",45000],
+["Qizil vino","alcohol","🍷",55000],
+["Oq vino","alcohol","🍷",50000],
+["Shampan","alcohol","🥂",70000],
+["Viski","alcohol","🥃",180000],
+["Votka","alcohol","🍸",85000],
+["Konyak","alcohol","🥃",150000]
+
+];
+
+function createDemoMarket(db,id,name,login,icon,seedOffset){
+
+    let market=db.markets.find(m=>m.id===id);
+
+    if(!market){
+
+        market={
+            id,
+            name,
+            owner:login,
+            phone:"+998900000"+String(seedOffset).padStart(2,"0"),
+            password:"9699",
+            icon,
+            login
+        };
+
+        db.markets.push(market);
+
+    }else{
+
+        market.name=name;
+        market.password="9699";
+        market.login=login;
+        market.icon=icon;
+
+    }
+
+    DEMO_PRODUCTS.forEach((item,index)=>{
+
+        const[
+            productName,
+            category,
+            productIcon,
+            basePrice
+        ]=item;
+
+        const barcode=
+            "478"+
+            String(seedOffset)+
+            String(index+1).padStart(6,"0");
+
+        let product=
+            db.products.find(
+                p=>p.id==="demo_"+index
+            );
+
+        if(!product){
+
+            product={
+                id:"demo_"+index,
+                barcode,
+                name:productName,
+                category,
+                stores:[]
+            };
+
+            db.products.push(product);
+
+        }
+
+        product.name=productName;
+        product.category=category;
+        product.barcode=barcode;
+
+        let storeData=
+            product.stores.find(
+                s=>s.marketId===id
+            );
+
+        const price=
+            basePrice+
+            ((index*seedOffset*137)%5000);
+
+        const sale=
+            (index+seedOffset)%7===0
+            ?10
+            :(index+seedOffset)%11===0
+                ?15
+                :0;
+
+        if(!storeData){
+
+            storeData={
+                marketId:id,
+                name:productName,
+                category,
+                icon:productIcon,
+                price,
+                stock:50+((index*7+seedOffset)%150),
+                sale
+            };
+
+            product.stores.push(storeData);
+
+        }else{
+
+            storeData.name=productName;
+            storeData.category=category;
+            storeData.icon=productIcon;
+
+        }
+
+    });
+
+}
+
+function seedDemoMarkets(db){
+
+    createDemoMarket(
+        db,
+        "demo_umidjon",
+        "UMIDJON MARKET",
+        "UMIDJON",
+        "🏪",
+        11
+    );
+
+    createDemoMarket(
+        db,
+        "demo_sardor",
+        "SARDOR MARKET",
+        "SARDOR",
+        "🏪",
+        22
+    );
+
+    createDemoMarket(
+        db,
+        "demo_asia",
+        "ASIA MARKET",
+        "ASIA",
+        "🏪",
+        33
+    );
+
+}
+
+function getDB(){
+
+    let db=null;
+
+    try{
+
+        const saved=
+            localStorage.getItem(DB_KEY);
+
+        if(saved){
+            db=JSON.parse(saved);
+        }
+
+    }catch(e){
+        db=null;
+    }
+
+    if(
+        !db ||
+        !Array.isArray(db.customers) ||
+        !Array.isArray(db.markets) ||
+        !Array.isArray(db.products) ||
+        !Array.isArray(db.orders)
+    ){
+        db=defaultDB();
+    }
+
+    seedDemoMarkets(db);
+
+    saveDB(db);
+
+    return db;
+
+}
+
+function saveDB(db){
+
+    localStorage.setItem(
+        DB_KEY,
+        JSON.stringify(db)
+    );
+
+}
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function money(n){
+
+    return Number(n||0)
+        .toLocaleString("uz-UZ")
+        +" so'm";
+
+}
+
+function finalPrice(store){
+
+    return Math.round(
+        Number(store.price)-
+        Number(store.price)*
+        Number(store.sale||0)/100
+    );
+
+}
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+function normalizePhone(phone){
+
+    return String(phone||"")
+        .replace(/\D/g,"");
+
+}
+
+function validPhone(phone){
+
+    const digits=normalizePhone(phone);
+
+    return digits.length>=12 &&
+        digits.startsWith("998");
+
+}
+
+function categoryName(category){
+
+    const names={
+        food:"🍎 OZIQ-OVQAT",
+        drinks:"🥤 ICHIMLIKLAR",
+        snacks:"🍿 SNEKLAR",
+        alcohol:"🍺 SPIRTLI ICHIMLIKLAR"
+    };
+
+    return names[category]||"📦 MAHSULOT";
+
+}
+
+function showToast(message){
+
+    const toast=
+        document.getElementById("toast");
+
+    toast.innerText=message;
+
+    toast.classList.add("show");
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer=setTimeout(
+        ()=>{
+            toast.classList.remove("show");
+        },
+        2500
+    );
+
+}
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+function switchAuth(type){
+
+    document
+        .getElementById("customerTab")
+        .classList.toggle(
+            "active",
+            type==="customer"
+        );
+
+    document
+        .getElementById("marketTab")
+        .classList.toggle(
+            "active",
+            type==="market"
+        );
+
+    document
+        .getElementById("customerAuth")
+        .classList.toggle(
+            "hidden",
+            type!=="customer"
+        );
+
+    document
+        .getElementById("marketAuth")
+        .classList.toggle(
+            "hidden",
+            type!=="market"
+        );
+
+}
+
+function showCustomerRegister(){
+
+    document
+        .getElementById("customerLogin")
+        .classList.add("hidden");
+
+    document
+        .getElementById("customerRegister")
+        .classList.remove("hidden");
+
+}
+
+function showCustomerLogin(){
+
+    document
+        .getElementById("customerRegister")
+        .classList.add("hidden");
+
+    document
+        .getElementById("customerLogin")
+        .classList.remove("hidden");
+
+}
+
+function showMarketRegister(){
+
+    document
+        .getElementById("marketLogin")
+        .classList.add("hidden");
+
+    document
+        .getElementById("marketRegister")
+        .classList.remove("hidden");
+
+}
+
+function showMarketLogin(){
+
+    document
+        .getElementById("marketRegister")
+        .classList.add("hidden");
+
+    document
+        .getElementById("marketLogin")
+        .classList.remove("hidden");
+
+}
+
+/* =====================================================
+   CUSTOMER REGISTER
+===================================================== */
+
+function registerCustomer(){
+
+    const name=
+        document.getElementById("rName")
+        .value.trim();
+
+    const phone=
+        document.getElementById("rPhone")
+        .value.trim();
+
+    const password=
+        document.getElementById("rPassword")
+        .value;
+
+    const password2=
+        document.getElementById("rPassword2")
+        .value;
+
+    const message=
+        document.getElementById(
+            "customerRegisterMessage"
+        );
+
+    if(!name || !phone || !password){
+
+        message.className="error";
+        message.innerText=
+            "❌ Barcha maydonlarni to'ldiring.";
+
+        return;
+    }
+
+    if(!validPhone(phone)){
+
+        message.className="error";
+        message.innerText=
+            "❌ Telefon raqamni +998 bilan kiriting.";
+
+        return;
+    }
+
+    if(password.length<4){
+
+        message.className="error";
+        message.innerText=
+            "❌ Parol kamida 4 belgidan iborat.";
+
+        return;
+    }
+
+    if(password!==password2){
+
+        message.className="error";
+        message.innerText=
+            "❌ Parollar bir xil emas.";
+
+        return;
+    }
+
+    const db=getDB();
+
+    const normalized=
+        normalizePhone(phone);
+
+    if(
+        db.customers.some(
+            c=>
+            normalizePhone(c.phone)===normalized
+        )
+    ){
+
+        message.className="error";
+        message.innerText=
+            "❌ Bu telefon raqam allaqachon ro'yxatdan o'tgan.";
+
+        return;
+    }
+
+    db.customers.push({
+
+        id:Date.now(),
+        name,
+        phone,
+        password
+
+    });
+
+    saveDB(db);
+
+    message.className="success";
+    message.innerText=
+        "✅ Akkaunt yaratildi!";
+
+    setTimeout(
+        showCustomerLogin,
+        900
+    );
+
+}
+
+/* =====================================================
+   CUSTOMER LOGIN
+===================================================== */
+
+function customerLogin(){
+
+    const phone=
+        document
+        .getElementById("cPhone")
+        .value.trim();
+
+    const password=
+        document
+        .getElementById("cPassword")
+        .value;
+
+    const db=getDB();
+
+    const customer=
+        db.customers.find(
+            c=>
+            normalizePhone(c.phone)===
+            normalizePhone(phone)
+            &&
+            c.password===password
+        );
+
+    if(!customer){
+
+        document
+        .getElementById(
+            "customerLoginError"
+        )
+        .innerText=
+            "❌ Telefon raqam yoki parol noto'g'ri.";
+
+        return;
+    }
+
+    currentCustomer=customer;
+    cart=[];
+
+    document
+        .getElementById("authScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("customerApp")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("customerName")
+        .innerText=
+            customer.name;
+
+    renderMarket();
+    renderCart();
+
+}
+
+/* =====================================================
+   CUSTOMER LOGOUT
+===================================================== */
+
+function customerLogout(){
+
+    currentCustomer=null;
+    cart=[];
+
+    document
+        .getElementById("customerApp")
+        .classList.add("hidden");
+
+    document
+        .getElementById("authScreen")
+        .classList.remove("hidden");
+
+    switchAuth("customer");
+
+}
+
+/* =====================================================
+   MARKET REGISTER
+===================================================== */
+
+function registerMarket(){
+
+    const name=
+        document.getElementById("shopName")
+        .value.trim();
+
+    const owner=
+        document.getElementById("ownerName")
+        .value.trim();
+
+    const phone=
+        document.getElementById("shopPhone")
+        .value.trim();
+
+    const password=
+        document.getElementById("shopPassword")
+        .value;
+
+    const password2=
+        document.getElementById("shopPassword2")
+        .value;
+
+    const icon=
+        document.getElementById("shopIcon")
+        .value.trim()
+        ||
+        "🏪";
+
+    const message=
+        document.getElementById(
+            "marketRegisterMessage"
+        );
+
+    if(!name || !owner || !phone || !password){
+
+        message.className="error";
+        message.innerText=
+            "❌ Barcha maydonlarni to'ldiring.";
+
+        return;
+    }
+
+    if(!validPhone(phone)){
+
+        message.className="error";
+        message.innerText=
+            "❌ Telefon raqamni +998 bilan kiriting.";
+
+        return;
+    }
+
+    if(password.length<4){
+
+        message.className="error";
+        message.innerText=
+            "❌ Parol kamida 4 belgidan iborat.";
+
+        return;
+    }
+
+    if(password!==password2){
+
+        message.className="error";
+        message.innerText=
+            "❌ Parollar bir xil emas.";
+
+        return;
+    }
+
+    const db=getDB();
+
+    if(
+        db.markets.some(
+            m=>
+            normalizePhone(m.phone)===
+            normalizePhone(phone)
+        )
+    ){
+
+        message.className="error";
+        message.innerText=
+            "❌ Bu raqam bilan do'kon allaqachon mavjud.";
+
+        return;
+    }
+
+    const market={
+
+        id:"m_"+Date.now(),
+        name,
+        owner,
+        phone,
+        password,
+        icon,
+        login:name
+            .replace(/\s+/g,"")
+            .toUpperCase()
+
+    };
+
+    db.markets.push(market);
+
+    saveDB(db);
+
+    message.className="success";
+    message.innerText=
+        "✅ Do'kon yaratildi!";
+
+    setTimeout(
+        showMarketLogin,
+        1000
+    );
+
+}
+
+/* =====================================================
+   MARKET LOGIN
+===================================================== */
+
+function marketLogin(){
+
+    const login=
+        document
+        .getElementById("marketPhone")
+        .value.trim();
+
+    const password=
+        document
+        .getElementById("marketPassword")
+        .value;
+
+    const db=getDB();
+
+    const market=
+        db.markets.find(
+            m=>
+            (
+                String(m.login||"")
+                    .toLowerCase()
+                ===
+                login.toLowerCase()
+
+                ||
+
+                normalizePhone(m.phone)
+                ===
+                normalizePhone(login)
+            )
+            &&
+            m.password===password
+        );
+
+    if(!market){
+
+        document
+        .getElementById(
+            "marketLoginError"
+        )
+        .innerText=
+            "❌ Login yoki parol noto'g'ri.";
+
+        return;
+    }
+
+    currentMarket=market;
+
+    document
+        .getElementById("authScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("marketApp")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("marketHeaderName")
+        .innerText=
+            market.icon+
+            " "+
+            market.name;
+
+    loadShopFields();
+    renderMyProducts();
+
+}
+
+/* =====================================================
+   MARKET LOGOUT
+===================================================== */
+
+function marketLogout(){
+
+    currentMarket=null;
+
+    document
+        .getElementById("marketApp")
+        .classList.add("hidden");
+
+    document
+        .getElementById("authScreen")
+        .classList.remove("hidden");
+
+    switchAuth("market");
+
+}
+
+/* =====================================================
+   SHOP
+===================================================== */
+
+function loadShopFields(){
+
+    if(!currentMarket)
+        return;
+
+    document
+        .getElementById("myShopTitle")
+        .innerText=
+            currentMarket.icon+
+            " "+
+            currentMarket.name;
+
+    document
+        .getElementById("editShopName")
+        .value=
+            currentMarket.name;
+
+    document
+        .getElementById("editShopPhone")
+        .value=
+            currentMarket.phone;
+
+    document
+        .getElementById("editShopIcon")
+        .value=
+            currentMarket.icon;
+
+}
+
+function updateShop(){
+
+    if(!currentMarket)
+        return;
+
+    const name=
+        document
+        .getElementById("editShopName")
+        .value.trim();
+
+    const phone=
+        document
+        .getElementById("editShopPhone")
+        .value.trim();
+
+    const icon=
+        document
+        .getElementById("editShopIcon")
+        .value.trim()
+        ||
+        "🏪";
+
+    if(!name || !validPhone(phone)){
+
+        showToast(
+            "❌ Do'kon ma'lumotlarini to'g'ri kiriting."
+        );
+
+        return;
+    }
+
+    const db=getDB();
+
+    const market=
+        db.markets.find(
+            m=>m.id===currentMarket.id
+        );
+
+    if(!market)
+        return;
+
+    market.name=name;
+    market.phone=phone;
+    market.icon=icon;
+
+    currentMarket=market;
+
+    saveDB(db);
+
+    loadShopFields();
+
+    document
+        .getElementById("marketHeaderName")
+        .innerText=
+            market.icon+
+            " "+
+            market.name;
+
+    renderMarket();
+
+    showToast(
+        "✅ Do'kon ma'lumotlari saqlandi."
+    );
+
+}
+
+/* =====================================================
+   ADD PRODUCT
+===================================================== */
+
+function addMyProduct(){
+
+    if(!currentMarket)
+        return;
+
+    const barcode=
+        document
+        .getElementById("pBarcode")
+        .value.trim();
+
+    const name=
+        document
+        .getElementById("pName")
+        .value.trim();
+
+    const category=
+        document
+        .getElementById("pCategory")
+        .value;
+
+    const price=
+        Number(
+            document
+            .getElementById("pPrice")
+            .value
+        );
+
+    const stock=
+        Number(
+            document
+            .getElementById("pStock")
+            .value
+        );
+
+    const sale=
+        Number(
+            document
+            .getElementById("pSale")
+            .value
+        );
+
+    const icon=
+        document
+        .getElementById("pIcon")
+        .value.trim()
+        ||
+        "📦";
+
+    if(
+        !barcode ||
+        !name ||
+        price<=0 ||
+        stock<0 ||
+        sale<0 ||
+        sale>100
+    ){
+
+        showToast(
+            "❌ Mahsulot ma'lumotlarini to'g'ri kiriting."
+        );
+
+        return;
+    }
+
+    const db=getDB();
+
+    let existing=
+        db.products.find(
+            p=>p.barcode===barcode
+        );
+
+    if(existing){
+
+        const sameStore=
+            existing.stores.find(
+                s=>
+                s.marketId===
+                currentMarket.id
+            );
+
+        if(sameStore){
+
+            sameStore.name=name;
+            sameStore.category=category;
+            sameStore.icon=icon;
+            sameStore.price=price;
+            sameStore.stock=stock;
+            sameStore.sale=sale;
+
+            existing.name=name;
+            existing.category=category;
+
+        }else{
+
+            existing.stores.push({
+
+                marketId:currentMarket.id,
+                name,
+                category,
+                icon,
+                price,
+                stock,
+                sale
+
+            });
+
+        }
+
+    }else{
+
+        db.products.push({
+
+            id:"p_"+Date.now(),
+
+            barcode,
+
+            name,
+
+            category,
+
+            stores:[{
+
+                marketId:currentMarket.id,
+                name,
+                category,
+                icon,
+                price,
+                stock,
+                sale
+
+            }]
+
+        });
+
+    }
+
+    saveDB(db);
+
+    clearProductForm();
+
+    renderMyProducts();
+    renderMarket();
+
+    showToast(
+        "✅ Mahsulot do'koningizga qo'shildi."
+    );
+
+}
+
+function clearProductForm(){
+
+    document.getElementById("pBarcode").value="";
+    document.getElementById("pName").value="";
+    document.getElementById("pPrice").value="";
+    document.getElementById("pStock").value="";
+    document.getElementById("pSale").value="0";
+    document.getElementById("pIcon").value="📦";
+
+}
+
+/* =====================================================
+   MY PRODUCTS
+===================================================== */
+
+function renderMyProducts(){
+
+    if(!currentMarket)
+        return;
+
+    const db=getDB();
+
+    const search=
+        document
+        .getElementById("myProductSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const rows=[];
+
+    db.products.forEach(product=>{
+
+        const store=
+            product.stores.find(
+                s=>
+                s.marketId===
+                currentMarket.id
+            );
+
+        if(!store)
+            return;
+
+        if(
+            search &&
+            !product.barcode
+                .toLowerCase()
+                .includes(search)
+            &&
+            !store.name
+                .toLowerCase()
+                .includes(search)
+        )
+            return;
+
+        rows.push({
+            product,
+            store
+        });
+
+    });
+
+    const tbody=
+        document
+        .getElementById(
+            "myProductsTable"
+        );
+
+    tbody.innerHTML="";
+
+    rows.forEach(
+        (item,index)=>{
+
+            const tr=
+                document.createElement("tr");
+
+            tr.innerHTML=`
+
+<td>${index+1}</td>
+
+<td>
+${item.store.icon}
+${escapeHTML(item.store.name)}
+</td>
+
+<td>
+${escapeHTML(item.product.barcode)}
+</td>
+
+<td>
+${categoryName(item.store.category)}
+</td>
+
+<td>
+<input type="number"
+value="${item.store.price}"
+onchange="
+updateMyProduct(
+'${item.product.id}',
+'price',
+this.value
+)">
+</td>
+
+<td>
+<input type="number"
+value="${item.store.stock}"
+onchange="
+updateMyProduct(
+'${item.product.id}',
+'stock',
+this.value
+)">
+</td>
+
+<td>
+<input type="number"
+min="0"
+max="100"
+value="${item.store.sale}"
+onchange="
+updateMyProduct(
+'${item.product.id}',
+'sale',
+this.value
+)">
+%
+</td>
+
+<td>
+<b>${money(
+    finalPrice(item.store)
+)}</b>
+</td>
+
+<td>
+<button
+class="delete"
+onclick="
+deleteMyProduct(
+'${item.product.id}'
+)">
+O'chirish
+</button>
+</td>
+
+`;
+
+            tbody.appendChild(tr);
+
+        }
+    );
+
+}
+
+/* =====================================================
+   UPDATE PRODUCT
+===================================================== */
+
+function updateMyProduct(
+    productId,
+    field,
+    value
+){
+
+    const db=getDB();
+
+    const product=
+        db.products.find(
+            p=>p.id===productId
+        );
+
+    if(!product)
+        return;
+
+    const store=
+        product.stores.find(
+            s=>
+            s.marketId===
+            currentMarket.id
+        );
+
+    if(!store)
+        return;
+
+    let number=Number(value);
+
+    if(field==="price"){
+
+        if(number<=0){
+
+            showToast(
+                "❌ Narx 0 dan katta bo'lishi kerak."
+            );
+
+            renderMyProducts();
+
+            return;
+        }
+
+        store.price=number;
+    }
+
+    if(field==="stock"){
+
+        store.stock=
+            Math.max(0,number);
+
+    }
+
+    if(field==="sale"){
+
+        store.sale=
+            Math.min(
+                100,
+                Math.max(0,number)
+            );
+
+    }
+
+    saveDB(db);
+
+    renderMyProducts();
+    renderMarket();
+
+    showToast(
+        "✅ Mahsulot yangilandi."
+    );
+
+}
+
+/* =====================================================
+   DELETE PRODUCT
+===================================================== */
+
+function deleteMyProduct(productId){
+
+    if(
+        !confirm(
+            "Mahsulotni do'koningizdan o'chirasizmi?"
+        )
+    )
+        return;
+
+    const db=getDB();
+
+    const product=
+        db.products.find(
+            p=>p.id===productId
+        );
+
+    if(!product)
+        return;
+
+    product.stores=
+        product.stores.filter(
+            s=>
+            s.marketId!==
+            currentMarket.id
+        );
+
+    if(product.stores.length===0){
+
+        db.products=
+            db.products.filter(
+                p=>p.id!==productId
+            );
+
+    }
+
+    saveDB(db);
+
+    renderMyProducts();
+    renderMarket();
+
+    showToast(
+        "🗑️ Mahsulot o'chirildi."
+    );
+
+}
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function setFilter(filter){
+
+    currentFilter=filter;
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(
+            b=>
+            b.classList.remove("active")
+        );
+
+    const ids={
+
+        all:"filterAll",
+        food:"filterFood",
+        drinks:"filterDrinks",
+        snacks:"filterSnacks",
+        alcohol:"filterAlcohol"
+
+    };
+
+    if(ids[filter]){
+
+        document
+            .getElementById(ids[filter])
+            .classList.add("active");
+
+    }
+
+    renderMarket();
+
+}
+
+/* =====================================================
+   CUSTOMER MARKET
+===================================================== */
+
+function renderMarket(){
+
+    const db=getDB();
+
+    const search=
+        document
+        .getElementById("marketSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const list=[];
+
+    db.products.forEach(product=>{
+
+        if(
+            !product.stores ||
+            product.stores.length===0
+        )
+            return;
+
+        const stores=
+            product.stores.filter(store=>{
+
+                if(store.stock<=0)
+                    return false;
+
+                if(
+                    currentFilter!=="all" &&
+                    store.category!==currentFilter
+                )
+                    return false;
+
+                const market=
+                    db.markets.find(
+                        m=>m.id===store.marketId
+                    );
+
+                if(!market)
+                    return false;
+
+                if(search){
+
+                    const text=(
+                        product.name+
+                        " "+
+                        store.name+
+                        " "+
+                        product.barcode+
+                        " "+
+                        market.name
+                    ).toLowerCase();
+
+                    if(!text.includes(search))
+                        return false;
+
+                }
+
+                return true;
+
+            });
+
+        if(stores.length===0)
+            return;
+
+        list.push({
+            product,
+            stores
+        });
+
+    });
+
+    const container=
+        document
+        .getElementById(
+            "marketProducts"
+        );
+
+    container.innerHTML="";
+
+    if(list.length===0){
+
+        container.innerHTML=`
+
+<div style="
+background:white;
+padding:35px;
+border-radius:15px;
+text-align:center;
+color:#64748b;
+grid-column:1/-1">
+
+🔎 Mahsulot topilmadi.
+
+</div>
+
+`;
+
+        return;
+
+    }
+
+    list.forEach(item=>{
+
+        const product=item.product;
+
+        const firstStore=item.stores[0];
+
+        const cheapest=
+            item.stores.reduce(
+                (a,b)=>
+                finalPrice(a)<finalPrice(b)
+                    ?a
+                    :b
+            );
+
+        const saleStores=
+            item.stores.filter(
+                s=>Number(s.sale)>0
+            );
+
+        const div=
+            document.createElement("div");
+
+        div.className="product";
+
+        div.onclick=()=>{
+
+            openProduct(product.id);
+
+        };
+
+        div.innerHTML=`
+
+<div class="product-icon">
+${firstStore.icon}
+</div>
+
+<h3>
+${escapeHTML(
+    product.name||
+    firstStore.name
+)}
+</h3>
+
+<div class="category-badge">
+${categoryName(
+    product.category||
+    firstStore.category
+)}
+</div>
+
+<div style="
+color:#94a3b8;
+font-size:12px;
+margin-top:7px">
+
+Barcode:
+${escapeHTML(product.barcode)}
+
+</div>
+
+<div class="product-price">
+${money(finalPrice(cheapest))}
+</div>
+
+<div style="
+color:#0284c7;
+font-size:12px;
+font-weight:bold;
+margin-top:5px">
+
+🏪 ${item.stores.length} ta market
+
+</div>
+
+${
+    saleStores.length>0
+    ?
+    `
+    <div style="
+    margin-top:8px;
+    color:#dc2626;
+    font-size:12px;
+    font-weight:bold">
+
+    🔥 ${saleStores.length} ta marketda chegirma
+
+    </div>
+    `
+    :
+    ""
+}
+
+<div class="product-stock">
+
+👆 Marketlar narxini ko'rish
+
+</div>
+
+`;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+/* =====================================================
+   PRODUCT DETAIL
+===================================================== */
+
+function openProduct(productId){
+
+    const db=getDB();
+
+    const product=
+        db.products.find(
+            p=>p.id===productId
+        );
+
+    if(!product)
+        return;
+
+    const stores=
+        product.stores
+        .filter(
+            store=>store.stock>0
+        )
+        .sort(
+            (a,b)=>
+            finalPrice(a)-finalPrice(b)
+        );
+
+    if(stores.length===0){
+
+        showToast(
+            "❌ Bu mahsulot hozir mavjud emas."
+        );
+
+        return;
+
+    }
+
+    const firstStore=stores[0];
+
+    let html=`
+
+<div style="
+text-align:center;
+font-size:70px">
+
+${firstStore.icon}
+
+</div>
+
+<h2 style="
+text-align:center;
+margin:10px 0">
+
+${escapeHTML(
+    product.name||
+    firstStore.name
+)}
+
+</h2>
+
+<div style="
+text-align:center;
+margin-bottom:8px">
+
+<span class="category-badge">
+
+${categoryName(
+    product.category||
+    firstStore.category
+)}
+
+</span>
+
+</div>
+
+<p style="
+text-align:center;
+color:#64748b;
+margin-bottom:20px">
+
+Barcode:
+${escapeHTML(product.barcode)}
+
+</p>
+
+<div style="
+background:#eff6ff;
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+text-align:center;
+color:#075985;
+font-weight:bold">
+
+💡 ${stores.length} ta marketdagi
+narxlarni solishtiring
+
+</div>
+
+`;
+
+    stores.forEach(
+        (store,index)=>{
+
+            const market=
+                db.markets.find(
+                    m=>m.id===store.marketId
+                );
+
+            if(!market)
+                return;
+
+            const price=
+                finalPrice(store);
+
+            html+=`
+
+<div class="
+store-card
+${index===0?"best-store":""}
+">
+
+${
+    index===0
+    ?
+    `
+    <div style="
+    background:#0284c7;
+    color:white;
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:8px">
+
+    🏆 ENG ARZON
+
+    </div>
+    `
+    :
+    ""
+}
+
+<div class="store-head">
+
+<span>
+${market.icon}
+${escapeHTML(market.name)}
+</span>
+
+<span style="
+color:#0284c7">
+
+Mavjud
+
+</span>
+
+</div>
+
+${
+    store.sale>0
+    ?
+    `
+    <div style="
+    margin-top:10px">
+
+    <span class="old">
+    ${money(store.price)}
+    </span>
+
+    <span class="sale">
+    🔥 ${store.sale}% CHEGIRMA
+    </span>
+
+    </div>
+    `
+    :
+    `
+    <div style="
+    margin-top:10px;
+    color:#64748b;
+    font-size:13px">
+
+    Chegirma yo'q
+
+    </div>
+    `
+}
+
+<div class="store-final">
+
+${money(price)}
+
+</div>
+
+<div style="
+color:#64748b;
+font-size:13px;
+margin-bottom:8px">
+
+📦 Qoldiq:
+${store.stock} dona
+
+</div>
+
+<button
+class="store-add"
+onclick="
+addToCart(
+'${product.id}',
+'${store.marketId}'
+)
+">
+
+🛒 Shu marketdan olish
+
+</button>
+
+</div>
+
+`;
+
+        }
+    );
+
+    document
+        .getElementById("productDetail")
+        .innerHTML=html;
+
+    document
+        .getElementById("productModal")
+        .classList.add("show");
+
+}
+
+/* =====================================================
+   CART
+===================================================== */
+
+function addToCart(
+    productId,
+    marketId
+){
+
+    const db=getDB();
+
+    const product=
+        db.products.find(
+            p=>p.id===productId
+        );
+
+    if(!product)
+        return;
+
+    const store=
+        product.stores.find(
+            s=>
+            s.marketId===
+            marketId
+        );
+
+    if(!store || store.stock<=0){
+
+        showToast(
+            "❌ Mahsulot tugagan."
+        );
+
+        return;
+
+    }
+
+    const existing=
+        cart.find(
+            x=>
+            x.productId===productId
+            &&
+            x.marketId===marketId
+        );
+
+    if(existing){
+
+        if(
+            existing.qty>=
+            store.stock
+        ){
+
+            showToast(
+                "❌ Omborda yetarli mahsulot yo'q."
+            );
+
+            return;
+
+        }
+
+        existing.qty++;
+
+    }else{
+
+        cart.push({
+            productId,
+            marketId,
+            qty:1
+        });
+
+    }
+
+    closeModal("productModal");
+
+    renderCart();
+
+    showToast(
+        "🛒 Savatga qo'shildi."
+    );
+
+}
+
+function renderCart(){
+
+    const container=
+        document.getElementById(
+            "cartList"
+        );
+
+    container.innerHTML="";
+
+    if(cart.length===0){
+
+        container.innerHTML=`
+
+<div class="empty">
+Savat hozircha bo'sh.
+</div>
+
+`;
+
+        updateCartTotal();
+
+        return;
+
+    }
+
+    const db=getDB();
+
+    cart.forEach(
+        (item,index)=>{
+
+            const product=
+                db.products.find(
+                    p=>
+                    p.id===
+                    item.productId
+                );
+
+            if(!product)
+                return;
+
+            const store=
+                product.stores.find(
+                    s=>
+                    s.marketId===
+                    item.marketId
+                );
+
+            const market=
+                db.markets.find(
+                    m=>
+                    m.id===
+                    item.marketId
+                );
+
+            if(!store || !market)
+                return;
+
+            const div=
+                document.createElement("div");
+
+            div.className="cart-item";
+
+            div.innerHTML=`
+
+<div class="cart-title">
+${store.icon}
+${escapeHTML(store.name)}
+</div>
+
+<div class="cart-store">
+${market.icon}
+${escapeHTML(market.name)}
+</div>
+
+<div class="cart-price">
+${money(
+    finalPrice(store)*
+    item.qty
+)}
+</div>
+
+<div class="cart-controls">
+
+<button
+class="qty"
+onclick="
+changeQty(${index},-1)
+">
+−
+</button>
+
+<b>${item.qty}</b>
+
+<button
+class="qty"
+onclick="
+changeQty(${index},1)
+">
++
+</button>
+
+<span>
+× ${money(finalPrice(store))}
+</span>
+
+<button
+class="remove"
+onclick="
+removeCart(${index})
+">
+O'chirish
+</button>
+
+</div>
+
+`;
+
+            container.appendChild(div);
+
+        }
+    );
+
+    updateCartTotal();
+
+}
+
+function changeQty(
+    index,
+    direction
+){
+
+    const item=cart[index];
+
+    if(!item)
+        return;
+
+    const db=getDB();
+
+    const product=
+        db.products.find(
+            p=>p.id===item.productId
+        );
+
+    if(!product)
+        return;
+
+    const store=
+        product.stores.find(
+            s=>
+            s.marketId===
+            item.marketId
+        );
+
+    if(!store)
+        return;
+
+    const newQty=
+        item.qty+
+        direction;
+
+    if(newQty<=0){
+
+        cart.splice(index,1);
+
+    }else if(
+        newQty>
+        store.stock
+    ){
+
+        showToast(
+            "❌ Omborda yetarli mahsulot yo'q."
+        );
+
+        return;
+
+    }else{
+
+        item.qty=newQty;
+
+    }
+
+    renderCart();
+
+}
+
+function removeCart(index){
+
+    cart.splice(index,1);
+
+    renderCart();
+
+}
+
+function getCartTotal(){
+
+    const db=getDB();
+
+    return cart.reduce(
+        (total,item)=>{
+
+            const product=
+                db.products.find(
+                    p=>
+                    p.id===
+                    item.productId
+                );
+
+            if(!product)
+                return total;
+
+            const store=
+                product.stores.find(
+                    s=>
+                    s.marketId===
+                    item.marketId
+                );
+
+            if(!store)
+                return total;
+
+            return total+
+                finalPrice(store)*
+                item.qty;
+
+        },
+        0
+    );
+
+}
+
+function updateCartTotal(){
+
+    document
+        .getElementById("cartCount")
+        .innerText=
+            cart.reduce(
+                (sum,item)=>
+                sum+item.qty,
+                0
+            );
+
+    document
+        .getElementById("cartTotal")
+        .innerText=
+            money(getCartTotal());
+
+}
+
+/* =====================================================
+   CHECKOUT
+===================================================== */
+
+function choosePhone(type){
+
+    selectedPhoneType=type;
+
+    document
+        .getElementById("myPhoneOption")
+        .classList.toggle(
+            "selected",
+            type==="my"
+        );
+
+    document
+        .getElementById("otherPhoneOption")
+        .classList.toggle(
+            "selected",
+            type==="other"
+        );
+
+    document
+        .getElementById("otherPhoneBox")
+        .classList.toggle(
+            "show",
+            type==="other"
+        );
+
+    document
+        .querySelectorAll(
+            'input[name="phoneType"]'
+        )[type==="my"?0:1]
+        .checked=true;
+
+}
+
+function openCheckout(){
+
+    if(cart.length===0){
+
+        showToast(
+            "❌ Avval savatga mahsulot qo'shing."
+        );
+
+        return;
+
+    }
+
+    document
+        .getElementById("myPhoneText")
+        .innerText=
+            currentCustomer.phone;
+
+    choosePhone("my");
+
+    document
+        .getElementById("checkoutTotal")
+        .innerText=
+            money(getCartTotal());
+
+    document
+        .getElementById("checkoutModal")
+        .classList.add("show");
+
+}
+
+/* =====================================================
+   PURCHASE
+===================================================== */
+
+function completePurchase(){
+
+    if(cart.length===0)
+        return;
+
+    const address=
+        document
+        .getElementById("checkoutAddress")
+        .value.trim();
+
+    const payment=
+        document
+        .getElementById("checkoutPayment")
+        .value;
+
+    let orderPhone=
+        currentCustomer.phone;
+
+    if(selectedPhoneType==="other"){
+
+        orderPhone=
+            document
+            .getElementById("otherPhone")
+            .value.trim();
+
+        if(!validPhone(orderPhone)){
+
+            showToast(
+                "❌ Boshqa telefon raqamni to'g'ri kiriting."
+            );
+
+            return;
+
+        }
+
+    }
+
+    if(!address){
+
+        showToast(
+            "❌ Yetkazib berish manzilini kiriting."
+        );
+
+        return;
+
+    }
+
+    const db=getDB();
+
+    for(const item of cart){
+
+        const product=
+            db.products.find(
+                p=>p.id===item.productId
+            );
+
+        if(!product){
+
+            showToast(
+                "❌ Mahsulot topilmadi."
+            );
+
+            return;
+
+        }
+
+        const store=
+            product.stores.find(
+                s=>
+                s.marketId===
+                item.marketId
+            );
+
+        if(
+            !store ||
+            store.stock<
+            item.qty
+        ){
+
+            showToast(
+                "❌ "+
+                (store?.name||"Mahsulot")+
+                " uchun qoldiq yetarli emas."
+            );
+
+            return;
+
+        }
+
+    }
+
+    const order={
+
+        id:
+            "ORD-"+
+            Date.now(),
+
+        customerId:
+            currentCustomer.id,
+
+        customerName:
+            currentCustomer.name,
+
+        phone:
+            orderPhone,
+
+        phoneType:
+            selectedPhoneType,
+
+        address,
+
+        payment,
+
+        createdAt:
+            new Date().toISOString(),
+
+        status:
+            "Qabul qilindi",
+
+        items:
+            cart.map(item=>{
+
+                const product=
+                    db.products.find(
+                        p=>
+                        p.id===
+                        item.productId
+                    );
+
+                const store=
+                    product.stores.find(
+                        s=>
+                        s.marketId===
+                        item.marketId
+                    );
+
+                const market=
+                    db.markets.find(
+                        m=>
+                        m.id===
+                        item.marketId
+                    );
+
+                store.stock-=item.qty;
+
+                return{
+
+                    productId:
+                        item.productId,
+
+                    marketId:
+                        item.marketId,
+
+                    productName:
+                        store.name,
+
+                    storeName:
+                        market.name,
+
+                    qty:
+                        item.qty,
+
+                    price:
+                        finalPrice(store)
+
+                };
+
+            }),
+
+        total:
+            getCartTotal()
+
+    };
+
+    db.orders.unshift(order);
+
+    saveDB(db);
+
+    cart=[];
+
+    document
+        .getElementById(
+            "checkoutAddress"
+        )
+        .value="";
+
+    document
+        .getElementById(
+            "otherPhone"
+        )
+        .value="";
+
+    closeModal(
+        "checkoutModal"
+    );
+
+    renderMarket();
+    renderCart();
+
+    showToast(
+        "✅ Buyurtma qabul qilindi!"
+    );
+
+}
+
+/* =====================================================
+   ORDERS
+===================================================== */
+
+function openOrders(){
+
+    if(!currentCustomer)
+        return;
+
+    const db=getDB();
+
+    const orders=
+        db.orders.filter(
+            o=>
+            o.customerId===
+            currentCustomer.id
+        );
+
+    const container=
+        document.getElementById(
+            "ordersList"
+        );
+
+    container.innerHTML="";
+
+    if(orders.length===0){
+
+        container.innerHTML=`
+
+<div class="empty">
+Sizda hali buyurtmalar yo'q.
+</div>
+
+`;
+
+    }else{
+
+        orders.forEach(order=>{
+
+            const date=
+                new Date(
+                    order.createdAt
+                )
+                .toLocaleString(
+                    "uz-UZ"
+                );
+
+            const div=
+                document.createElement("div");
+
+            div.className="order-card";
+
+            div.innerHTML=`
+
+<div class="order-head">
+
+<b>
+${escapeHTML(order.id)}
+</b>
+
+<span class="order-status">
+${escapeHTML(order.status)}
+</span>
+
+</div>
+
+<div style="
+color:#64748b;
+font-size:13px;
+margin-bottom:8px">
+
+📅 ${date}
+
+</div>
+
+${order.items.map(
+item=>`
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin:7px 0;
+gap:10px">
+
+<span>
+
+${escapeHTML(item.productName)}
+
+× ${item.qty}
+
+<br>
+
+<small style="color:#0284c7">
+🏪 ${escapeHTML(item.storeName)}
+</small>
+
+</span>
+
+<b>
+${money(item.price*item.qty)}
+</b>
+
+</div>
+
+`
+).join("")}
+
+<hr style="margin:12px 0">
+
+<p>
+📱 ${escapeHTML(order.phone)}
+</p>
+
+<p>
+📍 ${escapeHTML(order.address)}
+</p>
+
+<p style="
+margin-top:8px;
+color:#075985;
+font-size:18px;
+font-weight:bold">
+
+Jami:
+${money(order.total)}
+
+</p>
+
+`;
+
+            container.appendChild(div);
+
+        });
+
+    }
+
+    document
+        .getElementById("ordersModal")
+        .classList.add("show");
+
+}
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function closeModal(id){
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+}
+
+/* =====================================================
+   ENTER KEY
+===================================================== */
+
+document
+    .getElementById("cPassword")
+    .addEventListener(
+        "keydown",
+        e=>{
+            if(e.key==="Enter")
+                customerLogin();
+        }
+    );
+
+document
+    .getElementById("marketPassword")
+    .addEventListener(
+        "keydown",
+        e=>{
+            if(e.key==="Enter")
+                marketLogin();
+        }
+    );
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+===================================================== */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(modal=>{
+
+        modal.addEventListener(
+            "click",
+            e=>{
+
+                if(e.target===modal){
+
+                    modal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+/* =====================================================
+   START
+===================================================== */
+
+getDB();
+
+switchAuth("customer");
+
+</script>
+
+</body>
+</html>
